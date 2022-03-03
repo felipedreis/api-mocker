@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "mock.providers",
+      "type": "java.util.Map<java.lang.String, java.lang.Object>"
+    },
+    {
+      "name": "mock.providers.*.defaultBehaviour",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "mock.providers.*.paths",
+      "type": "java.util.List",
+      "description": "Description for mock.providers.https://api.monnos.com.paths."
+  }
+] }

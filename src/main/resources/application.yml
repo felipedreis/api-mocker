@@ -1,0 +1,71 @@
+mock:
+  providers:
+    - provider: https://api.acme.com
+      paths:
+        - path: /users/
+          method: GET
+          answer:
+            status: 200
+            headers:
+              Content-Type: application/json
+            body: |
+              {
+                "mensagem": "oi",
+                "lista": [1, 2, 3, 4]
+              }
+        - path: /foo/.*/.*/
+          method: GET
+          answer:
+            status: 500
+            body:
+              message: ERROR
+
+      defaultBehaviour: deny
+
+    - provider: https://cryptopanic.com
+      defaultBehaviour: passthrough
+
+    - provider: http://api.bank.com
+      defaultBehaviour: deny
+      paths:
+        - path: /api/bank/SendTransferPost
+          method: POST
+          answer:
+            headers:
+              Content-Type: application/json
+            status: 200
+            body: |
+              {
+                "Message": "Mocked message",
+                "ErrorCode": 2,
+                "LiqdcId": 0
+              }
+        - path: /api/bank/GetBalance/.*/.*
+          method: GET
+          answer:
+            status: 200
+            body: |
+              10000000
+
+    - provider: https://api.binance.com
+      defaultBehaviour: deny
+      paths:
+        - path: /sapi/v1/capital/withdraw/apply
+          method: POST
+          answer:
+            status: 500
+            headers:
+              Content-Type: application/json
+            body: |
+                {
+                  "code": -4019,
+                  "msg": "The currency is not opened for withdrawal"
+                }
+        - path: /api/v1/time
+          method: GET
+          answer:
+            status: 200
+            body: |
+              {
+                "serverTime": 1000000
+              }
